@@ -3,8 +3,9 @@ import {access} from './constants';
 
 class Api extends React.Component {
   constructor({baseUrl, headers}) {
-    this._baseUrl = baseUrl,
-    this._headers = headers
+    super();
+    this._baseUrl = baseUrl;
+    this._headers = headers;
   }
 
   _checkResponse(result, resultAlert) {
