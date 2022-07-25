@@ -6,10 +6,10 @@ import profileAddBtn from "../images/profile/profile__add-button.svg";
 import { api } from "../utils/api";
 
 function Main(props) {
-  const [userName, setUserName] = React.useState("Жак-Ив Кусто");
-  const [userDescription, setUserDescription] = React.useState("Исследователь океана");
-  const [userAvatar, setUserAvatar] = React.useState(profileAvatar);
-  const [cards, renderCards] = React.useState([]);
+  const [UserName, setUserName] = React.useState("Жак-Ив Кусто");
+  const [UserDescription, setUserDescription] = React.useState("Исследователь океана");
+  const [UserAvatar, setUserAvatar] = React.useState(profileAvatar);
+  const [Cards, setCardList] = React.useState([]);
 
   React.useEffect(() => {
     Promise.all([api.getUserData(), api.getInitialCards()])
@@ -17,7 +17,7 @@ function Main(props) {
         setUserName(userData.name);
         setUserDescription(userData.about);
         setUserAvatar(userData.avatar);
-        renderCards(initialCards);
+        setCardList(initialCards);
       })
       .catch((err) => {
         console.log(err);
@@ -29,7 +29,7 @@ function Main(props) {
       <section className="profile">
         <div className="profile__aside">
           <div className="profile__avatar-holder">
-            <img className="profile__avatar" src={userAvatar} alt={userName} />
+            <img className="profile__avatar" src={UserAvatar} alt={UserName} />
             <button
               className="profile__avatar-button"
               type="button"
@@ -44,7 +44,7 @@ function Main(props) {
           </div>
           <div className="profile__info">
             <div className="profile__info-heading">
-              <h1 className="profile__title">{userName}</h1>
+              <h1 className="profile__title">{UserName}</h1>
               <button
                 className="profile__edit-button"
                 type="button"
@@ -53,7 +53,7 @@ function Main(props) {
                 <img src={profileEditBtn} alt="Редактировать профиль" />
               </button>
             </div>
-            <p className="profile__subtitle">{userDescription}</p>
+            <p className="profile__subtitle">{UserDescription}</p>
           </div>
         </div>
         <button
@@ -66,7 +66,7 @@ function Main(props) {
       </section>
 
       <section className="elements">
-        {cards.map((cardsItem) => (
+        {Cards.map((cardsItem) => (
           <Card
             card={cardsItem}
             key={cardsItem._id}

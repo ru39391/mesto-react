@@ -6,31 +6,31 @@ import ImagePopup from './ImagePopup';
 import PopupWithForm from './PopupWithForm';
 
 function App() {
-  const [isEditProfilePopupOpen, setEditProfilePopupActive] = React.useState(0);
+  const [IsEditProfilePopupOpen, setEditProfilePopupActive] = React.useState(false);
   function handleEditProfileClick() {
-    setEditProfilePopupActive(1);
+    setEditProfilePopupActive(true);
   };
 
-  const [isEditAvatarPopupOpen, setEditAvatarPopupActive] = React.useState(0);
+  const [IsEditAvatarPopupOpen, setEditAvatarPopupActive] = React.useState(false);
   function handleEditAvatarClick() {
-    setEditAvatarPopupActive(1);
+    setEditAvatarPopupActive(true);
   };
 
-  const [isAddPlacePopupOpen, setAddPlacePopupActive] = React.useState(0);
+  const [IsAddPlacePopupOpen, setAddPlacePopupActive] = React.useState(false);
   function handleAddPlaceClick() {
-    setAddPlacePopupActive(1);
+    setAddPlacePopupActive(true);
   };
 
-  const [selectedCard, selectCard] = React.useState(null);
+  const [SelectedCard, setSelectedCard] = React.useState(null);
   function handleCardClick(card) {
-    selectCard(card);
+    setSelectedCard(card);
   }
 
   function closeAllPopups() {
-    setEditProfilePopupActive(0);
-    setEditAvatarPopupActive(0);
-    setAddPlacePopupActive(0);
-    selectCard(null);
+    setEditProfilePopupActive(false);
+    setEditAvatarPopupActive(false);
+    setAddPlacePopupActive(false);
+    setSelectedCard(null);
   }
 
   return (
@@ -38,8 +38,8 @@ function App() {
       <Header />
       <Main onEditProfile={handleEditProfileClick} onEditAvatar={handleEditAvatarClick} onAddPlace={handleAddPlaceClick} onCardClick={handleCardClick} />
       <Footer />
-      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-      <PopupWithForm title="Редактировать профиль" className="edit-profile" formName="editProfile" btnCaption="Сохранить" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
+      <ImagePopup card={SelectedCard} onClose={closeAllPopups} />
+      <PopupWithForm title="Редактировать профиль" className="edit-profile" formName="editProfile" btnCaption="Сохранить" isOpen={IsEditProfilePopupOpen} onClose={closeAllPopups}>
         <fieldset className="form__body">
           <div className="form__field-holder">
             <input className="form__field" name="name" minLength="2" maxLength="40" type="text" placeholder="Имя" required />
@@ -51,7 +51,7 @@ function App() {
           </div>
         </fieldset>
       </PopupWithForm>
-      <PopupWithForm title="Обновить аватар" className="update-userpic" formName="updateUserpic" btnCaption="Сохранить" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
+      <PopupWithForm title="Обновить аватар" className="update-userpic" formName="updateUserpic" btnCaption="Сохранить" isOpen={IsEditAvatarPopupOpen} onClose={closeAllPopups}>
         <fieldset className="form__body">
           <div className="form__field-holder">
             <input className="form__field" name="link" type="url" placeholder="Ссылка на картинку" required />
@@ -59,7 +59,7 @@ function App() {
           </div>
         </fieldset>
       </PopupWithForm>
-      <PopupWithForm title="Новое место" className="add-card" formName="addCard" btnCaption="Создать" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
+      <PopupWithForm title="Новое место" className="add-card" formName="addCard" btnCaption="Создать" isOpen={IsAddPlacePopupOpen} onClose={closeAllPopups}>
         <fieldset className="form__body">
           <div className="form__field-holder">
             <input className="form__field" name="name" minLength="2" maxLength="30" type="text" placeholder="Название" required />
