@@ -1,0 +1,21 @@
+.content {
+  width: 100%;
+  min-width: 320px;
+  max-width: 918px;
+  flex-grow: 1;
+  padding: 0 19px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+@media (min-width:576px) {
+  .content {
+    margin-bottom: 66px;
+  }
+}
+
+@media (max-width:575px) {
+  .content {
+    margin-bottom: 48px;
+  }
+}

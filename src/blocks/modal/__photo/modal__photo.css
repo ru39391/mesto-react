@@ -1,0 +1,6 @@
+.modal__photo {
+  width: 100%;
+  max-height: 75vh;
+  object-fit: cover;
+  margin: 0 0 10px;
+}

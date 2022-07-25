@@ -1,0 +1,9 @@
+.photo-wrap__title {
+  font-size: 24px;
+  line-height: 1.25;
+  font-weight: 900;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin: 0 25px 0 0;
+}

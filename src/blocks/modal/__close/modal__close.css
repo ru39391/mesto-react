@@ -1,0 +1,30 @@
+.modal__close {
+  padding: 0;
+  border: 0;
+  position: absolute;
+  cursor: pointer;
+  transition: all .3s ease;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.modal__close:hover {
+  opacity: .6;
+}
+
+@media (min-width:576px) {
+  .modal__close {
+    width: 32px;
+    height: 32px;
+    top: -40px;
+    right: -40px;
+  }
+}
+
+@media (max-width:575px) {
+  .modal__close {
+    width: 20px;
+    height: 20px;
+    top: -36px;
+    right: 0;
+  }
+}

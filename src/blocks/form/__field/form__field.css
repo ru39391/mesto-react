@@ -1,0 +1,14 @@
+.form__field {
+  width: 100%;
+  padding: 0 0 12px;
+  font-size: 14px;
+  line-height: 1.21;
+  box-sizing: border-box;
+  border-width: 0 0 1px;
+  border-color: rgba(0,0,0,.2);
+  transition: all .3s ease;
+}
+
+.form__field:focus {
+  outline: none;
+}

@@ -1,0 +1,5 @@
+@media (max-width:575px) {
+  .profile__info {
+    text-align: center;
+  }
+}

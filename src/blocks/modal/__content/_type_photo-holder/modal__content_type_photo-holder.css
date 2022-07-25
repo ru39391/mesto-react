@@ -1,0 +1,9 @@
+.modal__content_type_photo-holder {
+  width: auto;
+  max-width: 75vw;
+  padding: 0;
+  color: #fff;
+  border-radius: 0;
+  box-shadow: none;
+  background-color: rgba(0,0,0,0);
+}

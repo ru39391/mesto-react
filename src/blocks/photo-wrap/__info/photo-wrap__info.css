@@ -1,0 +1,7 @@
+.photo-wrap__info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 22px 20px;
+}
