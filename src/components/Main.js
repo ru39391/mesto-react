@@ -48,7 +48,7 @@ function Main(props) {
               <button
                 className="profile__edit-button"
                 type="button"
-                onClick={props.onEditAvatar}
+                onClick={props.onEditProfile}
               >
                 <img src={profileEditBtn} alt="Редактировать профиль" />
               </button>
