@@ -1,0 +1,25 @@
+.header {
+  width: 100%;
+  min-width: 320px;
+  max-width: 918px;
+  padding-right: 19px;
+  margin: 0 auto 40px;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(84,84,84,.7);
+}
+
+@media (min-width:768px) {
+  .header {
+    padding-left: 19px;
+    padding-top: 45px;
+    padding-bottom: 40px;
+  }
+}
+
+@media (max-width:767px) {
+  .header {
+    padding-left: 27px;
+    padding-top: 28px;
+    padding-bottom: 30px;
+  }
+}

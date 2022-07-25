@@ -1,0 +1,9 @@
+.photo-wrap {
+  display: flex;
+  flex-direction: column;
+  color: #000;
+  overflow: hidden;
+  position: relative;
+  border-radius: 10px;
+  background: #fff;
+}

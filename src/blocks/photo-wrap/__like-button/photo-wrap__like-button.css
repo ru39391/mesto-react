@@ -1,0 +1,15 @@
+.photo-wrap__like-button {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: all .3s ease;
+  background: url(../../../images/photo-wrap/photo-wrap__like-button.svg) no-repeat scroll center center rgba(0, 0, 0, 0);
+  background-size: 100% auto;
+}
+
+.photo-wrap__like-button:hover {
+  opacity: .5;
+}

@@ -1,0 +1,18 @@
+.modal__title {
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+@media (min-width:576px) {
+  .modal__title {
+    font-size: 24px;
+    margin: 0 0 54px;
+  }
+}
+
+@media (max-width:575px) {
+  .modal__title {
+    font-size: 18px;
+    margin: 0 0 75px;
+  }
+}
