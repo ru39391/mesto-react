@@ -1,9 +1,7 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
-import CurrentUserContext from '../contexts/CurrentUserContext';
 
 function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
-  const currentUser = React.useContext(CurrentUserContext);
   const avatarRef = React.useRef();
 
   function handleChangeAvatar(e) {
@@ -18,8 +16,8 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
   }
   
   React.useEffect(() => {
-    avatarRef.value = currentUser.avatar;
-  }, [currentUser]); 
+    avatarRef.current.value = '';
+  }, [isOpen]); 
 
   return (
     <PopupWithForm title="Обновить аватар" className="update-userpic" formName="updateUserpic" btnCaption="Сохранить" isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit}>

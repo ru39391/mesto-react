@@ -18,6 +18,12 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
       link: refs.link
     });
   }
+  
+  React.useEffect(() => {
+    Object.keys(refs).forEach(refsItem => {
+      refs[refsItem].current.value = '';
+    });
+  }, [isOpen]); 
 
   return (
     <PopupWithForm title="Новое место" className="add-card" formName="addCard" btnCaption="Создать" isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit}>
@@ -27,7 +33,7 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
           <div className="form__error name-error"></div>
         </div>
         <div className="form__field-holder">
-          <input className="form__field" name="link" type="url" placeholder="Ссылка на картинку" ref={refs.name} onChange={handleChangeValue} required />
+          <input className="form__field" name="link" type="url" placeholder="Ссылка на картинку" ref={refs.link} onChange={handleChangeValue} required />
           <div className="form__error link-error"></div>
         </div>
       </fieldset>

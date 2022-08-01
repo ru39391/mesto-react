@@ -27,7 +27,7 @@ function Card({card, link, name, likesCounter, onCardClick, onCardLike, onCardDe
           <div className="photo-wrap__likes-counter">{likesCounter}</div>
         </div>
       </div>
-      {isOwner? <RemoveBtn card={card} onCardDelete={onCardDelete} /> : ''}
+      {isOwner && <RemoveBtn card={card} onCardDelete={onCardDelete} /> }
     </article>
   );
 }
