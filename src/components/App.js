@@ -4,8 +4,39 @@ import Main from './Main';
 import Footer from './Footer';
 import ImagePopup from './ImagePopup';
 import PopupWithForm from './PopupWithForm';
+import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
+
+import api from "../utils/api";
+import CurrentUserContext from '../contexts/CurrentUserContext';
+import profileAvatar from '../images/profile/profile__avatar.png';
 
 function App() {
+  const [CurrentUser, setCurrentUser] = React.useState({
+    id: null,
+    name: 'Жак-Ив Кусто',
+    about: 'Исследователь океана',
+    avatar: profileAvatar
+  });
+  const [Cards, setCardList] = React.useState([]);
+
+  React.useEffect(() => {
+    Promise.all([api.getUserData(), api.getInitialCards()])
+      .then(([userData, initialCards]) => {
+        setCurrentUser({
+          id: userData._id,
+          name: userData.name,
+          about: userData.about,
+          avatar: userData.avatar
+        });
+        setCardList(initialCards);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const [IsEditProfilePopupOpen, setEditProfilePopupActive] = React.useState(false);
   function handleEditProfileClick() {
     setEditProfilePopupActive(true);
@@ -31,47 +62,80 @@ function App() {
     setEditAvatarPopupActive(false);
     setAddPlacePopupActive(false);
     setSelectedCard(null);
+  }  
+  
+  function handleUpdateUser(data) {
+    api.setUserData(data)
+      .then(res => {
+        CurrentUser.name = res.name;
+        CurrentUser.about = res.about;
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function handleUpdateAvatar(data) {
+    api.setUserPic(data)
+      .then(res => {
+        CurrentUser.avatar = res.avatar;
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function handleAddPlaceSubmit(data) {
+    api.addCard(data)
+      .then(res => {
+        setCardList([res, ...Cards]); 
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(item => item._id === CurrentUser.id);
+    api.changeLikeCardStatus({
+      id: card._id,
+      isLiked: !isLiked
+    })
+      .then(res => {
+        setCardList(state => state.map(item => item._id === card._id ? res : item));
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  function handleCardDelete(card) {
+    api.removeCard({
+      id: card._id
+    })
+      .then(res => {
+        setCardList(state => state.filter(item => item._id !== card._id));
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   return (
     <>
-      <Header />
-      <Main onEditProfile={handleEditProfileClick} onEditAvatar={handleEditAvatarClick} onAddPlace={handleAddPlaceClick} onCardClick={handleCardClick} />
-      <Footer />
-      <ImagePopup card={SelectedCard} onClose={closeAllPopups} />
-      <PopupWithForm title="Редактировать профиль" className="edit-profile" formName="editProfile" btnCaption="Сохранить" isOpen={IsEditProfilePopupOpen} onClose={closeAllPopups}>
-        <fieldset className="form__body">
-          <div className="form__field-holder">
-            <input className="form__field" name="name" minLength="2" maxLength="40" type="text" placeholder="Имя" required />
-            <div className="form__error name-error"></div>
-          </div>
-          <div className="form__field-holder">
-            <input className="form__field" name="about" minLength="2" maxLength="200" type="text" placeholder="О себе" required />
-            <div className="form__error about-error"></div>
-          </div>
-        </fieldset>
-      </PopupWithForm>
-      <PopupWithForm title="Обновить аватар" className="update-userpic" formName="updateUserpic" btnCaption="Сохранить" isOpen={IsEditAvatarPopupOpen} onClose={closeAllPopups}>
-        <fieldset className="form__body">
-          <div className="form__field-holder">
-            <input className="form__field" name="link" type="url" placeholder="Ссылка на картинку" required />
-            <div className="form__error link-error"></div>
-          </div>
-        </fieldset>
-      </PopupWithForm>
-      <PopupWithForm title="Новое место" className="add-card" formName="addCard" btnCaption="Создать" isOpen={IsAddPlacePopupOpen} onClose={closeAllPopups}>
-        <fieldset className="form__body">
-          <div className="form__field-holder">
-            <input className="form__field" name="name" minLength="2" maxLength="30" type="text" placeholder="Название" required />
-              <div className="form__error name-error"></div>
-          </div>
-          <div className="form__field-holder">
-            <input className="form__field" name="link" type="url" placeholder="Ссылка на картинку" required />
-              <div className="form__error link-error"></div>
-          </div>
-        </fieldset>
-      </PopupWithForm>
-      <PopupWithForm title="Вы уверены?" className="remove-card" formName="removeCard" btnCaption="Да" />
+      <CurrentUserContext.Provider value={CurrentUser}>
+        <Header />
+        <Main cards={Cards} onEditProfile={handleEditProfileClick} onEditAvatar={handleEditAvatarClick} onAddPlace={handleAddPlaceClick} onCardClick={handleCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} />
+        <Footer />
+        <ImagePopup card={SelectedCard} onClose={closeAllPopups} />
+        <EditProfilePopup isOpen={IsEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
+        <EditAvatarPopup isOpen={IsEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
+        <AddPlacePopup isOpen={IsAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
+        <PopupWithForm title="Вы уверены?" className="remove-card" formName="removeCard" btnCaption="Да" />
+      </CurrentUserContext.Provider>
     </>
   );
 }

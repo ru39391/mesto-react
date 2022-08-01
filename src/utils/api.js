@@ -43,20 +43,16 @@ class Api extends React.Component {
       .then(res => this._checkResponse(res, 'Ошибка при удалении карточки'));
   }
 
-  likeCard(data) {
+  changeLikeCardStatus(data) {
+    const config = {
+      method: data.isLiked ? 'PUT' : 'DELETE',
+      alert: data.isLiked ? 'Ошибка при добавлении в избранное' : 'Ошибка при удалении из избранного',
+    }
     return fetch(`${this._baseUrl}/cards/${data.id}/likes`, {
-      method: 'PUT',
+      method: config.method,
       headers: this._headers
     })
-      .then(res => this._checkResponse(res, 'Ошибка при добавлении в избранное'));
-  }
-
-  unlikeCard(data) {
-    return fetch(`${this._baseUrl}/cards/${data.id}/likes`, {
-      method: 'DELETE',
-      headers: this._headers
-    })
-      .then(res => this._checkResponse(res, 'Ошибка при удалении из избранного'));
+      .then(res => this._checkResponse(res, config.alert));
   }
 
   getUserData() {
@@ -83,17 +79,19 @@ class Api extends React.Component {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        avatar: data.link
+        avatar: data.avatar
       })
     })
       .then(res => this._checkResponse(res, 'Ошибка при обновлении изображения пользователя'));
   }
 }
 
-export const api = new Api({
+const api = new Api({
   baseUrl: access.baseUrl,
   headers: {
     authorization: access.token,
     'Content-Type': 'application/json'
   }
 });
+
+export default api;
